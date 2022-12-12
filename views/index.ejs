@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('utils/head'); %>
+<script>
+  function getPosts () {
+    try {
+      const res = getPostsApi().then(res => {
+        if (res.code === 500) {
+          //
+        } else if (res.code === 200) {
+          console.log('ok')
+          console.log(res.data)
+        }
+      }).catch(err => {
+        // showToast('toast, \'Error Occurred!')
+      })
+      
+      return false
+    } catch (error) {
+      return []
+    }
+  }
+
+  function addNewPost () {
+    showModal()
+  }
+</script>
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  .page {
+    background-color: #121212;
+    width: 100vw;
+    overflow-x: hidden;
+    min-height: 100vh;
+    color: white;
+  }
+  .header {
+    background-color: black;
+    padding: 10px 20px;
+  }
+  .posts-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    min-width: 400px;
+    max-width: 1000px;
+    height: 80vh;
+    min-height: 500px;
+    overflow-y: scroll;
+    list-style: none;
+    margin: auto;
+    margin-top: 5vh;
+  }
+  .end-text {
+    font-size: 12px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="page"> 
+  <div class="header">
+    <%= page %>
+  </div>
+
+  <ul class="posts-container">
+    <% for (let i = 0; i < posts.length; i++) { %>
+      <li> <%- include('utils/postabstract', { post: posts[i], user: user });  %> </li>
+    <% } %>
+    <%if (posts.length > 5) { %>
+      <li class="end-text">
+        This is the end...
+      </li>
+    <% } %>
+  </ul>
+  <button type="button" class="btn btn-dark" onclick="addNewPost()"> New Posts </button>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('utils/head'); %>
+<script>
+  function addNewPost () {
+    showModal()
+  }
+
+  function getPosts () {
+    try {
+      const res = getPostsApi().then(res => {
+        if (res.code === 500) {
+          //
+        } else if (res.code === 200) {
+          console.log('ok')
+          console.log(res.data)
+        }
+      }).catch(err => {
+        // showToast('toast, \'Error Occurred!')
+      })
+      
+      return false
+    } catch (error) {
+      return []
+    }
+  }
+</script>
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  .page {
+    background-color: #111;
+    width: 100vw;
+    overflow-x: hidden;
+    min-height: 100vh;
+    color: white;
+  }
+  .forum-title {
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+  }
+  .posts-container {
+    width: 80%;
+    margin: auto;
+    max-width: 1000px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+  .post-container {
+    background-color: #c4c4c4;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .post-container:hover {
+    background-color: #acacac;
+  }
+</style>
+</head>
+<body>
+<div class="page">    
+  <div class="post-title">
+    <%= post.title %>
+  </div>
+  <div class="author">
+    <span class="username"> <%= post.author.username == user.username ? 'You' : post.author.username %> </span> posted on  <%= post.created_at %>
+  </div>
+  <!-- <button type="button" class="btn btn-dark" onclick="addNewPost()"> New Posts </button> -->
+</div>
+
+</body>
+
+</html>
